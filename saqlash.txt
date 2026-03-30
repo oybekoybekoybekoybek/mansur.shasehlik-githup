@@ -1,0 +1,2629 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Mansur Shashlik</title>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">oybek.br</div>
+
+        <div class="center-title">
+            MANSUR <br> <span>SHASHLIK</span>
+        </div>
+
+        <div class="nav-right">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Qidiruv...">
+            </div>
+
+            <div class="location-box" id="locationBtn">
+                <i class="fas fa-map-marker-alt"></i>
+                <span id="locationText">Aniqlanmoqda...</span>
+            </div>
+
+            <div class="cart-box">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Savat</span>
+            </div>
+
+            <div class="menu-btn" id="adminMenu">
+                <i class="fas fa-bars"></i>
+                <span>Menu</span>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- SAVAT PANEL -->
+    <div id="cartOverlay"></div>
+
+    <div id="cartPanel">
+        <div class="cart-header">
+            <h3>🛒 Savat</h3>
+            <button id="closeCart">✕</button>
+        </div>
+
+        <div id="cartItems"></div>
+
+
+    </div>
+
+
+    <div class="ota">
+        <div class="bola1">
+            <div class="category-wrapper">
+                <div class="category-scroll">
+                    <div class="category-item active"><i class="fas fa-fire"></i><span>Shashlik</span></div>
+                    <div class="category-item"><i class="fas fa-leaf"></i><span>Salat</span></div>
+                    <div class="category-item"><i class="fas fa-utensils"></i><span>Garnir</span></div>
+                    <div class="category-item"><i class="fas fa-wine-glass-alt"></i><span>Ichimliklar</span></div>
+                    <div class="category-item"><i class="fas fa-stroopwafel"></i><span>Non</span></div>
+                    <div class="category-item"><i class="fas fa-bacon"></i><span>Farsh</span></div>
+                </div>
+            </div>
+            <div id="foodDisplay" class="food-grid"></div>
+        </div>
+    </div>
+
+    <div id="bottomCartPanel" class="bottom-cart-panel">
+        <div class="delivery-info">
+            <span id="deliveryText">Yetkazib berish: 0 so'm</span>
+        </div>
+
+        <button id="nextBtn" class="next-button" onclick="proceedToNext()" disabled>
+            <span>Keyingisi</span>
+            <span id="totalPriceText">0 so'm</span>
+        </button>
+    </div>
+
+
+    <div id="secretPage" class="hidden-page">
+        <div class="admin-container">
+            <h1>Admin Panel</h1>
+
+            <div class="admin-buttons" style="display:flex; gap:10px;">
+                <button class="add-food-btn" onclick="toggleSection('foodForm')"><i class="fas fa-plus"></i> Taom
+                    qo'shish</button>
+                <button class="add-food-btn" onclick="toggleSection('editSection')" style="background: #2ecc71;"><i
+                        class="fas fa-edit"></i> Tahrirlash</button>
+                <button class="add-food-btn" onclick="toggleSection('ordersSection')" style="background: #34495e;"><i
+                        class="fas fa-clipboard-list"></i> Buyurtmalar</button>
+            </div>
+
+            <div id="foodForm" class="food-form-card">
+                <h3>Yangi taom qo'shish</h3>
+                <div class="input-grid">
+                    <input type="text" id="foodName" placeholder="Taom nomi...">
+                    <input type="number" id="foodPrice" placeholder="Narxi...">
+                    <input type="text" id="foodImg" placeholder="Rasm URL...">
+                    <select id="foodCategory">
+                        <option value="Shashlik">Shashlik</option>
+                        <option value="Salat">Salat</option>
+                        <option value="Garnir">Garnir</option>
+                        <option value="Ichimliklar">Ichimliklar</option>
+                        <option value="Non">Non</option>
+                        <option value="Farsh">Farsh</option>
+                    </select>
+                </div>
+                <button class="save-btn" onclick="addFoodToMenu()">Saqlash</button>
+            </div>
+
+            <div id="editSection" class="food-form-card">
+                <h3>Taomni tahrirlash</h3>
+                <div class="search-box-admin">
+                    <i class="fas fa-search lupa"></i>
+                    <input type="text" id="adminSearchInput" placeholder="Taom nomini yozing...">
+                    <button class="find-btn" onclick="searchFoodForEdit()">Qidirish</button>
+                </div>
+                <div id="searchResult" class="search-result-area"></div>
+                <div id="editFields" style="display: none; margin-top: 15px;">
+                    <div class="input-grid">
+                        <input type="text" id="editName">
+                        <input type="number" id="editPrice">
+                        <input type="text" id="editImg">
+                        <select id="editStatus">
+                            <option value="active">Sotuvda bor</option>
+                            <option value="out_of_stock">Tugagan</option>
+                            <option value="delete">O'chirish</option>
+                        </select>
+                    </div>
+                    <button class="save-btn" onclick="saveEditedFood()" style="background:#27ae60;">Yangilash</button>
+                </div>
+            </div>
+
+            <div id="ordersSection" class="food-form-card">
+                <h3>Kelgan buyurtmalar</h3>
+                <div id="ordersList" class="orders-grid"></div>
+            </div>
+
+            <button class="back-btn" onclick="closePage()" style="margin-top:20px;">Chiqish</button>
+        </div>
+    </div>
+
+    <script src="java.js"></script>
+</body>
+
+</html>
+
+
+
+css
+
+
+
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+
+/* 1. Asosiy proporsiya sozlamalari */
+html {
+    /* 1526px ekran kengligida 10px = 1rem. 
+       Ekran kichraysa hamma detal (matn, rasm, masofa) baravar kichrayadi */
+    font-size: calc(10px + (10 * (100vw - 1526px) / 1526));
+    scroll-behavior: smooth;
+}
+
+@media (max-width: 1526px) {
+    html { font-size: 0.655vw; } /* Kompyuterlar uchun */
+}
+
+@media (max-width: 768px) {
+    html { font-size: 1.8vw; } /* Telefonlar uchun - hamma narsa o'z joyida qoladi */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* 2. OTA va BOLA bloklari */
+.ota {
+    width: 100%;
+    min-height: 100vh;
+    padding-top: 10rem; /* Navbar balandligiga mos */
+    background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("8.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+}
+
+.bola1 {
+    width: 98%; /* Ekran chetiga deyarli taqaladi */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/* 2. NAVBAR - Telefonlarda ham bir qatorda bo'lishi uchun */
+
+.navbar {
+
+    position: fixed;
+
+    top: 0;
+
+    width: 100%;
+
+    max-width: 100%;
+
+    /* 1526px dan 100% ga o'zgartirildi */
+
+    height: auto;
+
+    min-height: 80px;
+
+    padding: 10px 20px;
+
+    background: rgba(248, 248, 248, 0.2);
+
+    backdrop-filter: blur(10px);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    z-index: 1000;
+
+    flex-wrap: nowrap;
+
+    /* Elementlar pastga tushib ketmasligi uchun */
+
+}
+
+
+
+/* Logo telfonda kichikroq bo'lishi uchun */
+
+.logo {
+
+    color: #fff;
+
+    font-size: clamp(18px, 4vw, 30px);
+
+    /* Ekran kichraysa o'zi kichrayadi */
+
+    font-weight: 900;
+
+    white-space: nowrap;
+
+}
+
+
+
+/* Markazdagi sarlavha */
+
+.center-title {
+
+    margin-left: 10px;
+
+    color: white;
+
+    font-size: clamp(16px, 3vw, 28px);
+
+    font-weight: 900;
+
+    line-height: 1;
+
+}
+
+
+
+.center-title span {
+
+    font-size: 0.6em;
+
+    letter-spacing: 2px;
+
+}
+
+
+
+/* Tugmalar to'plami */
+
+.nav-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
+
+
+
+/* Tugmalarni telfon ekraniga moslash */
+
+.search-container,
+
+.location-box,
+
+.cart-box,
+
+.menu-btn {
+
+    height: 38px;
+
+    padding: 0 10px;
+
+    font-size: clamp(10px, 2vw, 14px);
+
+    border-radius: 20px;
+
+}
+
+
+
+/* Qidiruv darchasini telfonda qisqartirish */
+
+.search-container {
+
+    width: clamp(80px, 15vw, 180px);
+
+}
+
+
+
+.search-container input {
+
+    width: 100%;
+
+    font-size: 12px;
+
+}
+
+
+
+
+
+@media (max-width: 768px) {
+
+
+
+    .center-title {
+
+        display: none;
+
+    }
+
+
+
+    .location-box span,
+
+    .cart-box span,
+
+    .menu-btn span {
+
+        display: none;
+
+    }
+
+
+
+    .location-box,
+
+    .cart-box,
+
+    .menu-btn {
+
+        width: 40px;
+
+        padding: 0;
+
+        justify-content: center;
+
+    }
+
+
+
+    .search-container {
+
+        width: 100px;
+
+    }
+
+}
+
+
+
+.bola1 {
+
+    width: 90%;
+
+    text-align: center;
+
+}
+
+
+
+/* 4. LOGO VA SARLAVHA */
+
+.logo {
+
+    color: #fff;
+
+    font-size: clamp(18px, 4vw, 35px);
+
+    font-weight: 900;
+
+    white-space: nowrap;
+
+    text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.5);
+
+}
+
+
+
+.center-title {
+
+    position: absolute;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    text-align: center;
+
+    color: white;
+
+    font-size: clamp(18px, 3vw, 35px);
+
+    font-weight: 900;
+
+    line-height: 1;
+
+}
+
+
+
+.center-title span {
+
+    font-size: 0.6em;
+
+    letter-spacing: 3px;
+
+}
+
+
+
+.nav-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
+
+
+
+.search-container,
+
+.location-box,
+
+.cart-box,
+
+.menu-btn {
+
+    height: 45px;
+
+    border-radius: 25px;
+
+    background-color: white;
+
+    color: black;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 0 12px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+    font-weight: bold;
+
+}
+
+
+
+.search-container {
+
+    width: clamp(90px, 15vw, 180px);
+
+}
+
+
+
+.search-container input {
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    width: 100%;
+
+}
+
+
+
+
+
+/* Tugmalarning umumiy stili */
+
+.search-container,
+
+.location-box,
+
+.cart-box,
+
+.menu-btn {
+
+    height: 45px;
+
+    border-radius: 25px;
+
+    background-color: white;
+
+    color: black;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 0 10px;
+
+    cursor: pointer;
+
+    transition: 0.3s all ease;
+
+    font-weight: bold;
+
+}
+
+
+
+/* Hover effektlari */
+
+.location-box:hover {
+
+    background-color: rgb(254, 114, 0);
+
+    color: #ffffff;
+
+}
+
+
+
+.cart-box:hover,
+
+.menu-btn:hover {
+
+    background-color: #f0831d;
+
+    color: white;
+
+}
+
+
+
+.hidden-page {
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100vw;
+
+    height: 100vh;
+
+    background-color: white;
+
+    /* Butunlay oq randa */
+
+    z-index: 9999;
+
+    /* Navbar'dan ham ustun turishi uchun */
+
+    display: none;
+
+    /* JS buni flex qiladi */
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    /* Vertikal markazlash */
+
+    align-items: center;
+
+    /* Gorizontal markazlash */
+
+    text-align: center;
+
+}
+
+
+
+.page-content {
+
+    background: transparent;
+
+    padding: 20px;
+
+}
+
+
+
+.page-content h1 {
+
+    color: #000;
+
+    font-size: 45px;
+
+    font-weight: 900;
+
+    margin-bottom: 10px;
+
+}
+
+
+
+.page-content p {
+
+    color: #333;
+
+    font-size: 20px;
+
+    margin-bottom: 30px;
+
+}
+
+
+
+/* Orqaga qaytish tugmasi */
+
+.back-btn {
+
+    padding: 12px 35px;
+
+    background-color: #f0831d;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 30px;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+}
+
+
+
+.back-btn:hover {
+
+    background-color: #000;
+
+    transform: scale(1.05);
+
+}
+
+
+
+
+
+
+
+/* Toifalar konteyneri */
+
+.category-wrapper {
+
+    width: 100%;
+
+    overflow: hidden;
+
+    /* Skroll tashqariga chiqib ketmasligi uchun */
+
+    padding: 20px 0;
+
+    /* Yonlardagi 200px ni olib tashladik */
+
+    display: flex;
+
+    justify-content: center;
+
+    /* Kompyuterda markazda turishi uchun */
+
+}
+
+
+
+.category-scroll {
+
+    display: flex;
+
+    gap: 15px;
+
+    overflow-x: auto;
+
+    /* Yonga surilish imkoniyati */
+
+    padding: 10px 20px;
+
+    /* Faqat ichki kichik masofa */
+
+    scrollbar-width: none;
+
+    /* Firefox uchun */
+
+    -ms-overflow-style: none;
+
+    /* IE uchun */
+
+    max-width: 100%;
+
+    /* Ekrandan chiqib ketmasligi uchun */
+
+}
+
+
+
+.category-scroll::-webkit-scrollbar {
+
+    display: none;
+
+    /* Chrome va Safari uchun skrollni butunlay yashirish */
+
+}
+
+
+
+.category-item {
+
+    min-width: 140px;
+
+    /* Minimal eni */
+
+    white-space: nowrap;
+
+    /* Matn pastga tushib ketmasligi uchun */
+
+    flex-shrink: 0;
+
+    /* Elementlar siqilib qolmasligi uchun juda muhim! */
+
+    height: 50px;
+
+    background: rgba(255, 255, 255, 0.15);
+
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    border-radius: 50px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+
+    font-weight: bold;
+
+}
+
+
+
+/* Hover effekti */
+
+.category-item:hover {
+
+    background: #f9ca10;
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 5px 15px rgba(240, 131, 29, 0.4);
+
+}
+
+
+
+/* Aktiv toifa (bosilganda yoki birinchisi) */
+
+.category-item.active {
+
+    background: #f0831d;
+
+    border-color: #f0831d;
+
+    box-shadow: 0 5px 15px rgba(240, 131, 29, 0.3);
+
+}
+
+
+
+.category-item i {
+
+    font-size: 18px;
+
+    transition: 0.3s;
+
+}
+
+
+
+.category-item:hover i {
+
+    transform: rotate(15deg);
+
+}
+
+
+
+/* Mobil moslashuvchanlik */
+
+@media (max-width: 768px) {
+
+    .category-item {
+
+        min-width: 120px;
+
+        height: 45px;
+
+        font-size: 14px;
+
+    }
+
+}
+
+
+
+/* Admin Page Orqa foni */
+
+.hidden-page {
+
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("8.jpg") !important;
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-attachment: fixed;
+
+    display: none;
+
+    padding-top: 50px;
+
+}
+
+
+
+.admin-container {
+
+    width: 90%;
+
+    color: white;
+
+    max-width: 800px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 30px;
+
+}
+
+
+
+/* Oval Taom qo'shish tugmasi va hover */
+
+.add-food-btn {
+
+    padding: 15px 40px;
+
+    border-radius: 50px;
+
+    border: none;
+
+    background: linear-gradient(45deg, #f0831d, #ffae42);
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    box-shadow: 0 10px 20px rgba(240, 131, 29, 0.3);
+
+}
+
+
+
+.add-food-btn:hover {
+
+    transform: scale(1.1) rotate(-2deg);
+
+    box-shadow: 0 15px 30px rgba(240, 131, 29, 0.5);
+
+}
+
+
+
+/* Form Kartochkasi */
+
+.food-form-card {
+
+    background: rgba(255, 255, 255, 0.1);
+
+    backdrop-filter: blur(15px);
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    width: 100%;
+
+    display: none;
+
+    /* JS orqali ochiladi */
+
+    animation: slideDown 0.5s ease;
+
+}
+
+
+
+@keyframes slideDown {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(-20px);
+
+    }
+
+
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}
+
+
+
+.input-grid {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+
+}
+
+
+
+.input-grid input,
+
+.input-grid select {
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    border: none;
+
+    outline: none;
+
+    background: rgba(255, 255, 255, 0.9);
+
+}
+
+
+
+.food-grid {
+    display: grid;
+    /* HAR DOIM 4 TA USTUN - ham telfonda, ham kompyuterda */
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 1.5rem; /* Elementlar orasidagi masofa */
+    width: 100%;
+    padding: 2rem 1rem;
+}
+
+/* 4. TAOM KARTOCHKASI - proporsional o'lchamda */
+.food-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(1rem);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    border: 0.1rem solid rgba(255, 255, 255, 0.2);
+    transition: 0.3s;
+    width: 100%; /* Blok kengligi grid ustuniga moslashadi */
+}
+
+.food-card img {
+    width: 100%;
+    height: 15rem; /* Rasmlar balandligi bir xil bo'lishi uchun */
+    object-fit: cover;
+}
+
+.food-info {
+    padding: 1rem;
+    text-align: center;
+    color: white;
+}
+
+.food-info h3 {
+    font-size: 1.4rem;
+    margin: 0.5rem 0;
+}
+
+.food-info p {
+    font-size: 1.2rem;
+    color: #f0831d;
+    font-weight: bold;
+}
+
+/* Navbar elementlarini remga o'tkazamiz (namuna) */
+.navbar {
+    height: 8rem;
+    padding: 0 2rem;
+}
+
+.category-item {
+    min-width: 12rem;
+    height: 4.5rem;
+    font-size: 1.3rem;
+    border-radius: 3rem;
+}
+
+
+/* Sichqoncha borganda chiqadigan yozuv bloki */
+
+.food-card.out-of-stock::after {
+
+    content: "Bu mahsulot tugadi";
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background: rgba(0, 0, 0, 0.7);
+
+    /* Qora shaffof fon */
+
+    color: white;
+
+    padding: 6px 12px;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+
+    /* Kichikroq yozuv */
+
+    font-weight: bold;
+
+    white-space: nowrap;
+
+    opacity: 0;
+
+    /* Oddiy holatda ko'rinmaydi */
+
+    transition: opacity 0.3s ease;
+
+    z-index: 10;
+
+}
+
+
+
+/* Sichqoncha borganda yozuvni ko'rsatish */
+
+.food-card.out-of-stock:hover::after {
+
+    opacity: 1;
+
+}
+
+
+
+/* Rasm ustiga qorong'u qatlam (yozuv yaxshi ko'rinishi uchun) */
+
+.food-card.out-of-stock:hover img {
+
+    filter: brightness(0.5);
+
+    /* Sichqoncha borganda rasm biroz qorong'ulashadi */
+
+    transition: 0.3s;
+
+}
+
+
+
+
+
+/* +/- Counter stili */
+
+.quantity-controls {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    background: white;
+
+    border-radius: 30px;
+
+    padding: 5px 15px;
+
+    color: black;
+
+    margin-top: 10px;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+    transition: 0.3s;
+
+}
+
+
+
+.quantity-controls button {
+
+    border: none;
+
+    background: none;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    padding: 0 10px;
+
+}
+
+
+
+/* Pastki sariq panel */
+
+.bottom-cart-panel {
+
+    position: fixed;
+
+    bottom: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    background: white;
+
+    padding: 15px;
+
+    border-radius: 20px 20px 0 0;
+
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
+
+    z-index: 2000;
+
+    display: none;
+
+    /* Savatda narsa bo'lsa JS orqali ko'rsatamiz */
+
+}
+
+
+
+.delivery-info {
+
+    font-size: 14px;
+
+    text-align: center;
+
+    margin-bottom: 10px;
+
+    color: #333;
+
+}
+
+
+
+.next-button {
+
+    background: #ffcc00;
+
+    width: 100%;
+
+    padding: 15px;
+
+    border-radius: 15px;
+
+    border: none;
+
+    font-weight: bold;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    cursor: pointer;
+
+}
+
+
+
+/* Tugagan mahsulotlar uchun */
+
+.food-card.out-of-stock {
+
+    filter: grayscale(1);
+
+    opacity: 0.7;
+
+    position: relative;
+
+}
+
+
+
+.food-card.out-of-stock:hover::after {
+
+    content: "Bu mahsulot tugadi";
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background: rgba(0, 0, 0, 0.8);
+
+    color: white;
+
+    padding: 5px 10px;
+
+    border-radius: 5px;
+
+    font-size: 12px;
+
+}
+
+
+
+/* Savat tugmalari */
+
+.quantity-controls {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 15px;
+
+    background: #f1f1f1;
+
+    border-radius: 20px;
+
+    margin-top: 10px;
+
+    padding: 5px;
+
+}
+
+
+
+.quantity-controls button {
+
+    background: #ffcc00;
+
+    border: none;
+
+    border-radius: 50%;
+
+    width: 25px;
+
+    height: 25px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+}
+
+
+
+/* Pastki sariq panel */
+
+.bottom-cart-panel {
+
+    position: fixed;
+
+    bottom: 20px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 90%;
+
+    max-width: 400px;
+
+    background: white;
+
+    padding: 15px;
+
+    border-radius: 20px;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+
+    z-index: 999;
+
+}
+
+
+
+.next-button {
+
+    background: #ffcc00;
+
+    width: 100%;
+
+    border: none;
+
+    padding: 15px;
+
+    border-radius: 15px;
+
+    font-weight: bold;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    cursor: pointer;
+
+}
+
+
+
+
+
+.orders-grid {
+
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+
+    max-height: 500px;
+
+    overflow-y: auto;
+
+    padding: 10px;
+
+}
+
+
+
+.order-card {
+
+    background: #fdfdfd;
+
+    color: #333;
+
+    border-left: 5px solid #f0831d;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    text-align: left;
+
+}
+
+
+
+.order-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    font-size: 12px;
+
+    color: #777;
+
+    margin-bottom: 10px;
+
+}
+
+
+
+.order-item-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    font-size: 14px;
+
+    margin-bottom: 5px;
+
+}
+
+
+
+.delete-order-btn {
+
+    background: #e74c3c;
+
+    color: white;
+
+    border: none;
+
+    padding: 5px 10px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    margin-top: 10px;
+
+}
+
+
+
+.order-card:hover {
+
+    transform: scale(1.01);
+
+    transition: 0.2s;
+
+}
+
+
+
+/* Qidiruv darchasi */
+
+.search-box-admin {
+
+    display: flex;
+
+    gap: 10px;
+
+    background: rgba(255, 255, 255, 0.9);
+
+    padding: 5px;
+
+    border-radius: 10px;
+
+    align-items: center;
+
+    margin-bottom: 15px;
+
+}
+
+
+
+.search-box-admin input {
+
+    flex: 1;
+
+    border: none;
+
+    outline: none;
+
+    padding: 10px;
+
+    background: transparent;
+
+}
+
+
+
+.find-btn {
+
+    background: #000;
+
+    color: white;
+
+    border: none;
+
+    padding: 10px 20px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+}
+
+
+
+/* Topilgan natija */
+
+.found-item {
+
+    background: rgba(255, 255, 255, 0.2);
+
+    padding: 10px;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    cursor: pointer;
+
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+}
+
+
+
+.found-item:hover {
+
+    background: rgba(255, 255, 255, 0.4);
+
+}
+
+
+
+/* TUGAGAN mahsulot effekti */
+
+.food-card.out-of-stock {
+
+    filter: grayscale(1) opacity(0.6);
+
+    cursor: not-allowed;
+
+    position: relative;
+
+}
+
+
+
+.out-label {
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    transform: translate(-50%, -50%) rotate(-15deg);
+
+    background: rgba(231, 76, 60, 0.9);
+
+    color: white;
+
+    padding: 5px 15px;
+
+    font-weight: bold;
+
+    border: 2px solid white;
+
+    z-index: 2;
+
+}
+
+
+
+/* Modal asosi */
+
+.modal-overlay {
+
+    display: none;
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.7);
+
+    z-index: 2000;
+
+    backdrop-filter: blur(5px);
+
+    transition: all 0.3s ease;
+
+}
+
+
+
+/* Modal ichi */
+
+.cart-modal-content {
+
+    position: absolute;
+
+    bottom: 0;
+
+    /* Pastdan chiqishi uchun */
+
+    width: 100%;
+
+    max-width: 500px;
+
+    background: #fff;
+
+    border-radius: 20px 20px 0 0;
+
+    padding: 20px;
+
+    left: 50%;
+
+    transform: translateX(-50%) translateY(100%);
+
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+}
+
+
+
+/* Modal ochiq holati */
+
+.modal-overlay.active .cart-modal-content {
+
+    transform: translateX(-50%) translateY(0);
+
+}
+
+
+
+/* Hover animatsiyalari */
+
+.cart-box:hover {
+
+    transform: scale(1.1);
+
+    transition: 0.2s;
+
+    cursor: pointer;
+
+    color: #ffffff;
+
+}
+
+
+
+.cart-item-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid #eee;
+
+    animation: slideIn 0.3s ease-out;
+
+}
+
+
+
+@keyframes slideIn {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateX(-20px);
+
+    }
+
+
+
+    to {
+
+        opacity: 1;
+
+        transform: translateX(0);
+
+    }
+
+}
+
+
+
+.checkout-btn {
+
+    width: 100%;
+
+    padding: 15px;
+
+    background: #f0831d;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    margin-top: 15px;
+
+}
+
+
+
+.phone-modal-content {
+
+    position: fixed;
+
+    top: 50%;
+
+    left: 50%;
+
+    transform: translate(-50%, -50%) scale(0.8);
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 15px;
+
+    text-align: center;
+
+    width: 90%;
+
+    max-width: 350px;
+
+    z-index: 3000;
+
+}
+
+
+
+.phone-input-wrapper {
+
+    display: flex;
+
+    align-items: center;
+
+    background: #f4f4f4;
+
+    padding: 10px;
+
+    border-radius: 8px;
+
+    margin: 20px 0;
+
+    border: 2px solid #ddd;
+
+}
+
+
+
+.phone-input-wrapper .prefix {
+
+    font-weight: bold;
+
+    padding-right: 5px;
+
+    color: #333;
+
+}
+
+
+
+.phone-input-wrapper input {
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    width: 100%;
+
+    outline: none;
+
+}
+
+
+
+.modal-btns {
+
+    display: flex;
+
+    gap: 10px;
+
+}
+
+
+
+.confirm-btn {
+
+    background: #2ecc71;
+
+    color: white;
+
+    border: none;
+
+    padding: 10px;
+
+    flex: 1;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+}
+
+
+
+.cancel-btn {
+
+    background: #95a5a6;
+
+    color: white;
+
+    border: none;
+
+    padding: 10px;
+
+    flex: 1;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+}
+
+
+
+.next-button {
+
+    background: #ffcc00;
+
+    width: 100%;
+
+    border: none;
+
+    padding: 15px;
+
+    border-radius: 15px;
+
+    font-weight: bold;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    cursor: pointer;
+
+}
+/* RESET */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* GLOBAL SCALE */
+html {
+    font-size: calc(5px + 0.5vw);
+}
+body {
+    font-family: Arial, sans-serif;
+    background: #000;
+    color: #fff;
+}
+
+/* NAVBAR */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 8rem;
+    padding: 1.5rem 2rem;
+    background: rgba(255,255,255,.15);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+}
+
+.logo { font-size: 3rem; font-weight: 900; }
+
+.center-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-weight: 900;
+}
+
+.center-title span { font-size: 1.6rem; letter-spacing: 3px; }
+
+.nav-right {
+    display: flex;
+    gap: 1rem;
+}
+
+.search, .btn {
+    background: #fff;
+    color: #000;
+    border-radius: 3rem;
+    padding: .8rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.search input {
+    border: none;
+    outline: none;
+}
+
+/* MAIN */
+.ota {
+    padding-top: 0rem;
+    min-height: 100vh;
+    background:
+      linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
+      url("8.jpg") center/cover fixed;
+}
+
+.bola {
+    width: 90%;
+    margin: auto;
+}
+
+/* CATEGORIES */
+.categories {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding: 2rem 0;
+}
+.cat {
+    padding: 1rem 2.5rem;
+    border-radius: 3rem;
+    background: rgba(255,255,255,.15);
+    white-space: nowrap;
+    cursor: pointer;
+}
+.cat.active { background: #f0831d; }
+
+/* FOOD GRID — HAR DOIM 4 TA */
+.food-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+
+/* CARD */
+.food-card {
+    background: rgba(255,255,255,.1);
+    border-radius: 1.5rem;
+    overflow: hidden;
+}
+.food-card img {
+    width: 100%;
+    height: 16rem;
+    object-fit: cover;
+}
+.info {
+    padding: 1.2rem;
+    text-align: center;
+}
+.info h3 { font-size: 1.6rem; }
+.info p { color: #f0831d; font-weight: bold; }
+
+.counter {
+    margin-top: 1rem;
+    background: #fff;
+    color: #000;
+    border-radius: 3rem;
+    padding: .6rem;
+}
+
+/* BOTTOM PANEL */
+.bottom-panel {
+    position: fixed;
+    bottom: 2rem;
+    left: 40%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 420px;
+    background: #fff;
+    color: #000;
+    border-radius: 2rem;
+    padding: 1.2rem;
+    text-align: center;
+}
+.bottom-panel button {
+    margin-top: .8rem;
+    width: 100%;
+    padding: 1rem;
+    background: #ffcc00;
+    border: none;
+    border-radius: 1.5rem;
+    font-weight: bold;
+}
+
+
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.navbar .logo { font-weight: bold; }
+.navbar .center-title span { color: orange; font-weight: bold; }
+.nav-right { display: flex; align-items: center; gap: 1rem; }
+.nav-right .cart-box { cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
+
+/* OVERLAY */
+#cartOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: .3s;
+    z-index: 2000;
+}
+
+/* PANEL */
+#cartPanel {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 360px;
+    height: 100vh;
+    background: #fff;
+    color: #000;
+    z-index: 2001;
+    transition: .35s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+#cartPanel.active { right: 0; }
+#cartOverlay.active { opacity: 1; pointer-events: auto; }
+
+/* HEADER */
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem;
+    border-bottom: 1px solid #ddd;
+}
+.cart-header button {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+/* ITEMS */
+#cartItems {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.cart-item {
+    display: flex;
+    gap: 1rem;
+    padding: .8rem;
+    border-radius: 1rem;
+    transition: .3s;
+    align-items: center;
+}
+.cart-item:hover { background: #f5f5f5; }
+
+.cart-item img {
+    width: 70px;
+    height: 70px;
+    border-radius: .8rem;
+    object-fit: cover;
+}
+
+.cart-info {
+    flex: 1;
+}
+.cart-info h4 { font-size: .95rem; margin: 0; }
+.cart-info p { color: #f0831d; font-weight: bold; margin: 0.3rem 0; }
+
+/* COUNTER */
+.cart-actions {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+.cart-actions button {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: none;
+    background: #ffcc00;
+    cursor: pointer;
+    transition: .2s;
+}
+.cart-actions button:hover { transform: scale(1.1); }
+
+.cart-remove {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+/* FOOTER */
+.cart-footer {
+    padding: 1rem;
+    border-top: 1px solid #ddd;
+}
+.order-btn {
+    width: 100%;
+    padding: .9rem;
+    background: #ffcc00;
+    border: none;
+    border-radius: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+.order-btn:hover { background: #f5b800; }
+
+
+
+
+js
+
+
+// --- 1. GLOBAL O'ZGARUVCHILAR ---
+let allFoods = JSON.parse(localStorage.getItem("menuItems")) || [];
+let orders = JSON.parse(localStorage.getItem("allOrders")) || [];
+let cart = JSON.parse(localStorage.getItem("cart")) || {};
+let activeCategory = "Shashlik";
+let editingIndex = null;
+
+// Mansur Shashlik №2 restorani koordinatalari
+const RESTAURANT_COORDS = { lat: 39.6791, lon: 66.9155 };
+let userCoords = null;
+let userAddress = "";
+
+// --- 2. SAHIFA YUKLANGANDA ---
+document.addEventListener("DOMContentLoaded", () => {
+    renderFoods(activeCategory);
+    renderCart();
+    updateCartUI();
+    initLocation();
+
+    // Kategoriyalarni boshqarish
+    document.querySelectorAll(".category-item").forEach(item => {
+        item.addEventListener("click", () => {
+            activeCategory = item.querySelector("span").innerText.trim();
+            document.querySelector(".category-item.active")?.classList.remove("active");
+            item.classList.add("active");
+            renderFoods(activeCategory);
+        });
+    });
+
+    // Savat tugmalari
+    const cartBtn = document.querySelector(".cart-box");
+    const cartOverlay = document.getElementById("cartOverlay");
+    const closeBtn = document.getElementById("closeCart");
+
+    if (cartBtn) cartBtn.onclick = openCart;
+    if (cartOverlay) cartOverlay.onclick = closeCartFn;
+    if (closeBtn) closeBtn.onclick = closeCartFn;
+});
+
+// --- 3. MASOFANI HISOBLASH (1 KM = 2000 SO'M) ---
+function getDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+// --- 4. LOKATSIYA ANIQLASH ---
+function initLocation() {
+    const locText = document.getElementById("locationText");
+    const locBtn = document.getElementById("locationBtn") || (locText ? locText.parentElement : null);
+
+    if (navigator.geolocation && locText) {
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            userCoords = { lat, lon };
+
+            try {
+                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&addressdetails=1`);
+                const data = await res.json();
+
+                if (data.address) {
+                    const a = data.address;
+                    const region = a.state || a.region || "Samarqand";
+                    const area = a.suburb || a.neighbourhood || a.residential || "";
+                    const point = data.name || a.amenity || a.shop || "";
+                    
+                    let parts = [];
+                    if (region) parts.push(region);
+                    if (area) parts.push(area);
+                    if (point) parts.push(point);
+                    if (!point && a.road) parts.push(a.road);
+
+                    const coordString = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
+                    userAddress = `${parts.join(", ")} (${coordString})`;
+                    locText.textContent = userAddress;
+
+                    if (locBtn) {
+                        locBtn.onclick = () => window.open(`https://www.google.com/maps?q=${lat},${lon}`, '_blank');
+                        locBtn.style.cursor = "pointer";
+                    }
+                }
+            } catch (e) {
+                locText.textContent = "Manzilni aniqlashda xatolik";
+            }
+            updateCartUI();
+        }, (err) => {
+            locText.textContent = "GPS ruxsat berilmadi";
+            updateCartUI();
+        }, { enableHighAccuracy: true });
+    }
+}
+
+// --- 5. SAVAT FUNKSIYALARI ---
+function openCart() {
+    document.getElementById("cartPanel").classList.add("active");
+    document.getElementById("cartOverlay").classList.add("active");
+    renderCart();
+}
+
+function closeCartFn() {
+    document.getElementById("cartPanel").classList.remove("active");
+    document.getElementById("cartOverlay").classList.remove("active");
+}
+
+function renderCart() {
+    const box = document.getElementById("cartItems");
+    const totalText = document.getElementById("cartTotal");
+    if (!box) return;
+
+    box.innerHTML = "";
+    let total = 0;
+
+    Object.entries(cart).forEach(([name, item]) => {
+        total += item.price * item.quantity;
+        box.innerHTML += `
+        <div class="cart-item">
+            <img src="${item.img}" onerror="this.src='8.jpg'">
+            <div class="cart-info">
+                <h4>${name}</h4>
+                <p>${Number(item.price).toLocaleString()} so'm</p>
+                <div class="cart-actions">
+                    <button onclick="changeQty('${name}', ${item.price}, -1)">−</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="changeQty('${name}', ${item.price}, 1)">+</button>
+                    <button class="cart-remove" onclick="removeItem('${name}')">🗑</button>
+                </div>
+            </div>
+        </div>`;
+    });
+
+    if (totalText) totalText.textContent = total.toLocaleString() + " so'm";
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartUI();
+}
+
+function changeQty(name, price, delta, img = "8.jpg") {
+    if (!cart[name] && delta > 0) {
+        // Agar menyudan qo'shilayotgan bo'lsa, rasmni allFoods ichidan qidiramiz
+        const foodData = allFoods.find(f => f.name === name);
+        cart[name] = { price: price, quantity: 0, img: foodData ? foodData.img : img };
+    }
+    
+    if (cart[name]) {
+        cart[name].quantity += delta;
+        if (cart[name].quantity <= 0) delete cart[name];
+    }
+    
+    renderCart();
+    renderFoods(activeCategory);
+}
+
+function removeItem(name) {
+    delete cart[name];
+    renderCart();
+    renderFoods(activeCategory);
+}
+
+function updateCartUI() {
+    let subtotal = 0;
+    let count = 0;
+    Object.values(cart).forEach(i => { 
+        subtotal += i.price * i.quantity; 
+        count += i.quantity; 
+    });
+
+    const panel = document.getElementById("bottomCartPanel");
+    const nextBtn = document.getElementById("nextBtn");
+    const deliveryLabel = document.getElementById("deliveryText");
+    const totalPriceText = document.getElementById("totalPriceText");
+
+    if (panel) {
+        if (count > 0) {
+            panel.style.display = "block";
+            if (userCoords) {
+                const dist = getDistance(RESTAURANT_COORDS.lat, RESTAURANT_COORDS.lon, userCoords.lat, userCoords.lon);
+                const delivery = Math.round(dist * 2000);
+
+                if (deliveryLabel) deliveryLabel.textContent = `Yetkazib berish: ${delivery.toLocaleString()} so'm (${dist.toFixed(1)} km)`;
+                if (totalPriceText) totalPriceText.textContent = (subtotal + delivery).toLocaleString() + " so'm";
+                if (nextBtn) { 
+                    nextBtn.disabled = false; 
+                    nextBtn.style.background = "#ffcc00"; 
+                    nextBtn.style.opacity = "1"; 
+                }
+            } else {
+                if (deliveryLabel) deliveryLabel.textContent = "Manzil aniqlanmoqda...";
+                if (nextBtn) { nextBtn.disabled = true; nextBtn.style.background = "#cccccc"; }
+            }
+        } else {
+            panel.style.display = "none";
+        }
+    }
+}
+
+// --- 6. MENUNI RENDER QILISH ---
+function renderFoods(category) {
+    const display = document.getElementById("foodDisplay");
+    if (!display) return;
+    display.innerHTML = "";
+    
+    const filtered = allFoods.filter(f => f.category === category);
+
+    filtered.forEach(food => {
+        const isOut = food.status === "out_of_stock";
+        const count = cart[food.name]?.quantity || 0;
+
+        display.innerHTML += `
+            <div class="food-card ${isOut ? 'out-of-stock' : ''}">
+                <img src="${food.img}" onerror="this.src='8.jpg'">
+                <div class="food-info">
+                    <h3>${food.name}</h3>
+                    <p>${Number(food.price).toLocaleString()} so'm</p>
+                    ${!isOut ? `
+                    <div class="quantity-controls">
+                        <button onclick="changeQty('${food.name}', -1)">-</button>
+                        <span>${count}</span>
+                        <button onclick="changeQty('${food.name}', 1)">+</button>
+                    </div>` : '<div class="out-label">TUGAGAN</div>'}
+                </div>
+            </div>`;
+    });
+}
+
+// --- 7. BUYURTMA BERISH ---
+function proceedToNext() {
+    if (Object.keys(cart).length === 0) {
+        alert("Savat bo'sh! Oldin taom tanlang.");
+        return;
+    }
+
+    let phone = prompt("Telefon raqamingizni kiriting:\n(Masalan: +998 97 930 44 44", "");
+    if (!phone || phone.replace(/\D/g, '').length !== 9) {
+        alert("Iltimos, 9 xonali telefon raqamingizni kiriting!");
+        return;
+    }
+
+    const finalPhone = "+998 " + phone.replace(/\D/g, '');
+    const deliveryVal = parseInt(document.getElementById("deliveryText")?.textContent.replace(/\D/g, '')) || 0;
+    const totalVal = parseInt(document.getElementById("totalPriceText")?.textContent.replace(/\D/g, '')) || 0;
+
+    const newOrder = {
+        id: Math.floor(1000 + Math.random() * 9000),
+        date: new Date().toLocaleString('uz-UZ'),
+        phone: finalPhone,
+        address: userAddress || "Aniqlanmagan",
+        items: JSON.parse(JSON.stringify(cart)),
+        delivery: deliveryVal,
+        total: totalVal
+    };
+
+    orders.push(newOrder);
+    localStorage.setItem("allOrders", JSON.stringify(orders));
+
+    if (typeof renderOrders === "function") renderOrders();
+
+    alert(`Rahmat! Buyurtmangiz qabul qilindi.\nChek raqami: #${newOrder.id}`);
+
+    // Savatni tozalash
+    cart = {};
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+    updateCartUI();
+    renderFoods(activeCategory);
+    closeCartFn();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const checkoutBtn = document.getElementById("nextBtn");
+    if (checkoutBtn) checkoutBtn.onclick = proceedToNext;
+});
+
+
+
+// --- 8. ADMIN PANELI FUNKSIYALARI ---
+function toggleSection(id) {
+    document.getElementById('foodForm').style.display = id === 'foodForm' ? 'block' : 'none';
+    document.getElementById('editSection').style.display = id === 'editSection' ? 'block' : 'none';
+    document.getElementById('ordersSection').style.display = id === 'ordersSection' ? 'block' : 'none';
+}
+
+function addFoodToMenu() {
+    const name = document.getElementById("foodName").value;
+    const price = Number(document.getElementById("foodPrice").value);
+    const img = document.getElementById("foodImg").value || "8.jpg";
+    const category = document.getElementById("foodCategory").value;
+
+    if (!name || !price) return alert("Nom va narxni kiriting!");
+
+    allFoods.push({ name, price, img, category, status: 'active' });
+    localStorage.setItem("menuItems", JSON.stringify(allFoods));
+    alert("Taom qo'shildi!");
+    renderFoods(activeCategory);
+    
+    // Formani tozalash
+    document.getElementById("foodName").value = "";
+    document.getElementById("foodPrice").value = "";
+}
+
+function renderOrders() {
+    const list = document.getElementById("ordersList");
+    if (!list) return;
+    list.innerHTML = orders.length === 0 ? "<p>Buyurtmalar yo'q</p>" : "";
+
+    [...orders].reverse().forEach((o, i) => {
+        let itemsList = "";
+        for (const [name, data] of Object.entries(o.items)) {
+            itemsList += `<div style="display:flex;justify-content:space-between"><span>${name} x${data.quantity}</span><span>${(data.price * data.quantity).toLocaleString()}</span></div>`;
+        }
+
+        list.innerHTML += `
+            <div class="order-receipt" style="background:#fff;color:#000;padding:15px;margin-bottom:15px;border-radius:5px;font-family:monospace;box-shadow:0 4px 10px rgba(0,0,0,0.3)">
+                <div style="text-align:center;border-bottom:1px dashed #000;padding-bottom:10px">
+                    <h3 style="margin:0">MANSUR SHASHLIK</h3>
+                    <small>CHEK #${o.id} | ${o.date}</small>
+                </div>
+                <div style="padding:10px 0;border-bottom:1px dashed #000">
+                    <p style="margin:0"><b>TEL:</b> ${o.phone}</p>
+                    <p style="margin:0"><b>MANZIL:</b> ${o.address}</p>
+                </div>
+                <div style="padding:10px 0">
+                    ${itemsList}
+                </div>
+                <div style="border-top:1px dashed #000;padding-top:10px;text-align:right">
+                    <div>Yetkazish: ${o.delivery.toLocaleString()}</div>
+                    <h3 style="margin:0">JAMI: ${o.total.toLocaleString()} so'm</h3>
+                </div>
+                <button onclick="deleteOrder(${orders.length - 1 - i})" style="width:100%;margin-top:10px;background:#ff4757;color:#fff;border:none;padding:5px;cursor:pointer">O'CHIRISH</button>
+            </div>`;
+    });
+}
+
+function deleteOrder(idx) {
+    if (confirm("Buyurtmani o'chirasizmi?")) {
+        orders.splice(idx, 1);
+        localStorage.setItem("allOrders", JSON.stringify(orders));
+        renderOrders();
+    }
+}
+
+// Admin kirish
+const adminMenuBtn = document.getElementById("adminMenu");
+if (adminMenuBtn) {
+    adminMenuBtn.onclick = () => {
+        if (prompt("Admin paroli:") === "123") {
+            document.getElementById("secretPage").style.display = "flex";
+            renderOrders();
+        } else {
+            alert("Parol noto'g'ri!");
+        }
+    };
+}
+
+function closePage() { document.getElementById("secretPage").style.display = "none"; }
+
+function searchFoodForEdit() {
+    const q = document.getElementById("adminSearchInput").value.toLowerCase();
+    editingIndex = allFoods.findIndex(f => f.name.toLowerCase().includes(q));
+    if (editingIndex > -1) {
+        const f = allFoods[editingIndex];
+        document.getElementById("editFields").style.display = "block";
+        document.getElementById("editName").value = f.name;
+        document.getElementById("editPrice").value = f.price;
+        document.getElementById("editImg").value = f.img;
+        document.getElementById("editStatus").value = f.status;
+    } else alert("Topilmadi!");
+}
+
+function saveEditedFood() {
+    const status = document.getElementById("editStatus").value;
+    if (status === "delete") {
+        allFoods.splice(editingIndex, 1);
+    } else {
+        allFoods[editingIndex].name = document.getElementById("editName").value;
+        allFoods[editingIndex].price = Number(document.getElementById("editPrice").value);
+        allFoods[editingIndex].img = document.getElementById("editImg").value;
+        allFoods[editingIndex].status = status;
+    }
+    localStorage.setItem("menuItems", JSON.stringify(allFoods));
+    location.reload();
+}

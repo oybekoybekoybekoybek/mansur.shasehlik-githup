@@ -1,0 +1,19 @@
+{
+  "siteName": "Mansur Shashlik",
+  "freeDeliveryKm": 1,
+  "deliveryPricePerKm": 2000,
+  "deliveryMinutesPerKm": 1.5,
+  "maxDeliveryKm": 70,
+  "maxItemQuantity": 0,
+  "contactPhone": "+998946991886",
+  "adminPanelPassword": "111",
+  "restaurantName": "Mansur Shashlik",
+  "restaurantAddress": "Самарканд, ул. Имома Ал-Бухорий, 185",
+  "restaurantLat": 39.659485,
+  "restaurantLon": 66.973074,
+  "categories": [
+    "molte",
+    "non"
+  ],
+  "updatedAt": "2026-03-28T20:58:41.395Z"
+}

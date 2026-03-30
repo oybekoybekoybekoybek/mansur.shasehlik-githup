@@ -1,0 +1,53 @@
+[
+  {
+    "date": "2026-03-30 15:20:49",
+    "phone": "+998946987811",
+    "address": "Samarqand shahri",
+    "items": {
+      "molte": {
+        "price": 33333,
+        "quantity": 3,
+        "img": "https://www.google.com/imgres?q=restaurants&imgurl=https%3A%2F%2Fstatic01.nyt.com%2Fimages%2F2024%2F04%2F10%2Fmultimedia%2F10best-restaurants-chicago13-hpqj%2F08best-restaurants-chicago13-hpqj-superJumbo.jpg&imgrefurl=https%3A%2F%2Fwww.nytimes.com%2Farticle%2Fbest-restaurants-chicago.html&docid=T5m9__FOou6gxM&tbnid=6faEsopswrwklM&vet=12ahUKEwiBoK2Dr7iTAxUqGBAIHaRYLbUQnPAOegQIGxAB..i&w=2048&h=1365&hcb=2&ved=2ahUKEwiBoK2Dr7iTAxUqGBAIHaRYLbUQnPAOegQIGxAB"
+      },
+      "chap chak": {
+        "price": 7000,
+        "quantity": 6,
+        "img": "https://www.istockphoto.com/photos/tandyr"
+      }
+    },
+    "distanceKm": 2.67,
+    "durationMin": 6,
+    "delivery": 3332,
+    "total": 145331,
+    "userId": 1771622087409,
+    "email": "oybeknarzullayev734@gmail.com",
+    "deliveryType": "home",
+    "customerCoords": {
+      "lat": 39.665711,
+      "lon": 66.955364
+    },
+    "customerMapLink": "https://yandex.uz/maps/?mode=routes&rtt=pd&rtext=39.66571085396251%2C66.9553641842178~39.659485%2C66.973074",
+    "paymentMethod": "cash",
+    "paymentProvider": "cash",
+    "paymentStatus": "cash",
+    "customerComment": "ILTIMOS SHUR BULSIN",
+    "status": "tayyorlandi",
+    "id": 1,
+    "createdAtMs": 1774866049000,
+    "createdAt": "2026-03-30T10:20:49.000Z",
+    "prepMinutes": 15,
+    "customerName": "Oybek Narzullayev",
+    "customerRegion": "Samarqand viloyati",
+    "paymentCollected": false,
+    "sessionId": "session-1774864381291",
+    "deliveryConfirmedAt": "",
+    "paymentCollectedAt": "",
+    "readyAt": "2026-03-30T10:22:58.401Z",
+    "courierQueuedAt": "2026-03-30T10:22:58.443Z",
+    "courierNotifyReason": "admin_ready",
+    "courierAssignedId": 2,
+    "courierAssignedAt": "2026-03-30T10:22:58.760Z",
+    "courierNotified": true,
+    "courierNotifiedAt": "2026-03-30T10:22:58.761Z"
+  }
+]

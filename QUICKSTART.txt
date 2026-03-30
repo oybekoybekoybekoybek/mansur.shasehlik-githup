@@ -1,0 +1,202 @@
+================================================================================
+    🍢 MANSUR SHASHLIK - TEZKOR START GUIDE 🍢
+================================================================================
+
+AGAR BIRINCHI MARTA BO'LSA, QUYIDAGINI O'QIB CHIQING:
+
+================================================================================
+1️⃣ NODE.JS O'RNATISH (BIRINCHI MARTA FAQAT)
+================================================================================
+
+⚠️ MUHIM: Sizning kompyuteringizda Node.js o'rnatilmagan bo'lishi mumkin!
+
+✅ TEKSHIRING:
+  - Windows Start'dan PowerShell ochang
+  - "node --version" yozing
+  - Agar raqam chiqsa (masalan v20.1.0), damrak! Skip qiling!
+  - Agar "bulunamadi" chiqsa, quyidagini bajaring:
+
+📥 NODE.JS YUKLAB O'RNATING:
+  1. https://nodejs.org/ saytiga oching
+  2. LTS versiyasini tanlang (masalan v20.x)
+  3. Windows Installer (.msi) ni bosing Download
+  4. Installer'ni ishga tushiring (.msi faylni double-click)
+  5. "NEXT" bosing, hamma qilindisi o'q qilish
+  6. "Install" bosing
+  7. KOMPYUTERNI RESTART QILING!
+
+================================================================================
+2️⃣ SETUP SCRIPT'NI ISHGA TUSHIRING (IKKINCHI MARTA)
+================================================================================
+
+VARIANT A: OSON (Tavsiya qilingan)
+  - Windows Explorer'da shu papkaga boring
+  - "setup.bat" faylni topging
+  - Uni double-click qiling
+  - Xona paydo bo'ladigan bo'lsa, sabr qiling!
+  - Yakunlangach, PowerShell/CMD yotib qoladi
+
+VARIANT B: PowerShell
+  1. PowerShell ni shu papkada oching (Shift + Right-click)
+  2. "Open PowerShell window here" tanlang
+  3. Yozing: .\setup.ps1
+  4. Sabr qiling... npm paketlari o'rnatilmoqda
+
+VARIANT C: Manual
+  1. PowerShell ni shu papkada oching
+  2. Yozing: npm install
+  3. Sabr qiling...
+
+✅ BOLGAN BO'LSA: "packages installed successfully" yozuvini kurasiz
+
+================================================================================
+3️⃣ SERVERNI BOSHLANG
+================================================================================
+
+QADAMI-1: PowerShell ni shu papkada oching (Shift + Right-click)
+
+QADAMI-2: Yozing:
+  npm start
+
+QADAMI-3: Kutib turing! Quyidagi xabar chiqishi kerak:
+  🚀 Server 3000 portda ishlamoqda!
+  📍 Sayt: http://localhost:3000
+  📊 API: http://localhost:3000/api/foods
+
+⚠️ MUHIM: PowerShell'ni YOPMASVNG! Server'ni ishga tushirgangi holda qolsin!
+
+================================================================================
+4️⃣ BRAUZER'DA SAYTNI OCHING
+================================================================================
+
+1. YANGI Browser window/tab ni oching (Chrome, Firefox, Edge, etc)
+2. Manzil (URL) qatoriga yozing: http://localhost:3000
+3. ENTER bosing
+4. MANSUR SHASHLIK saytini kurasiz!
+
+================================================================================
+5️⃣ ADMIN PANEL'GA KIRIB TAOMLARNI QO'SHING
+================================================================================
+
+ADMIN PANELIGA KIRISH:
+  1. Sayt yuqor o'ng burchagida "Menu" tugmasini bosing
+  2. Paroli: 123 yozing
+  3. "OK" bosing yoki ENTER
+
+TAOM QO'SHISH:
+  1. "Taom qo'shish" tugmasini bosing
+  2. Malumotlarni to'ldiring:
+     - Taom nomi: Qoʻy Shashlik
+     - Narx: 45000
+     - Rasm URL: (ixtiyoriy - qoldiring ayni xohlasangiz)
+     - Kategoriya: Shashlik
+  3. "Saqlash" bosing
+
+✅ TAOM DARHOL SAYTDA KO'RINADI!
+
+TAOM TAHRIRLASH:
+  1. "Tahrirlash" tugmasini bosing
+  2. Taom nomini yozing va "Qidirish" bosing
+  3. Malumotlarni o'zgartirung
+  4. "Yangilash" bosing
+
+TAOM O'CHIRISH:
+  1. "Tahrirlash" uchun taom qidiring
+  2. Status qismida "O'chirish" tanlang
+  3. "Yangilash" bosing
+
+================================================================================
+❌ AGAR MUAMMO BO'LSA
+================================================================================
+
+"Node Installer xatosi" yoki "npm not found":
+  → Node.js to'g'ri o'rnatilganmi tekshiring
+  → https://nodejs.org/ dan qayta yuklab oling
+  → Kompyuterni RESTART qiling
+  → Terminaluni o'chilib qayta oching
+
+"Server bilan ulanib bo'lalobot" xatos:
+  → npm start ishga tushgan bo'ladimi tekshiring
+  → PowerShell'da qulish CTRL+C basib to'xtating
+  → npm start qayta yozing
+  → Tekshiring: http://localhost:3000
+
+Brauzer'da "Cannot GET /" chiqsa:
+  → Serverni qayta boshing (npm start)
+  → Brauzerning cache'i o'chiring (Ctrl+Shift+Delete)
+  → Sahifani yangilang (F5)
+
+Admin panelga kirib bo'lalmadim:
+  → Paroli dogri kiritdingizmi? (123)
+  → Console'ni billang (F12) va xatolarni ko'ring
+
+================================================================================
+📂 FAYLLAR
+================================================================================
+
+Shu papkada quyidagi fayllar bor:
+
+ASOSIY FAYLLAR:
+  index.html     - Sayt (bunda barcha narsasi bo'ladi)
+  java.js        - JavaScript kod
+  style.css      - Uslublar
+
+YANGI SERVER FAYLLAR:
+  server.js      - Node.js server (yana yosh!)
+  package.json   - NPM paketlari ro'yxati
+  foods_db.json  - Database (taomlar saqlanadi)
+  node_modules/  - npm paketlari (avtomátik yaratiladi)
+
+DOKUMENTATSIYA:
+  README.md           - Batafsil ma'lumot
+  SERVER_SETUP.md     - Server qo'l qo'yish
+  NODE_INSTALL.md     - Node.js o'rnatish
+  QUICKSTART.txt      - Bu fayl
+
+SETUP:
+  setup.bat      - Windows batch script (oson boshlash)
+  setup.ps1      - PowerShell script
+
+================================================================================
+🎯 MAQSAD
+================================================================================
+
+Bu loyiha Node.js server'ga asoslangan. Shuning uchun:
+
+1. Admin taomlarni qo'shsa → Server ma'lumotni database'ga saqlaydi
+2. Database'da saqlangan → Barcha foydalanuvchilar ko'radi
+3. Serverdan ma'lumot o'zgarsa → Sayt darhol yangilanadi
+
+SHUNING UCHUN SERVERNI HAMESHA ISHGA TUSHIRISH KERAK!
+
+================================================================================
+✅ TAYYOR!
+================================================================================
+
+Endi siz:
+  ✅ Node.js o'rnatdingiz
+  ✅ npm paketlarini o'rnatdingiz
+  ✅ Serverni boshladi
+  ✅ Saytni brauzer'da ochdingiz
+  ✅ Admin paneliga kira olasiz
+  ✅ Taomlarni qo'sha olasiz
+
+OMAD! 🍢✨
+
+Biron savol bo'lsa, README.md va SERVER_SETUP.md fayllarini o'qing.
+
+================================================================================
+📞 YORDAM
+================================================================================
+
+Agar qandaydir xato chiqsa:
+1. Xato xabarini o'qib tushung
+2. Google'da qidiring
+3. Stack Overflow'da birov javob berry bo'lsa
+4. Node.js rasmiy saytiga boring
+
+Bu oddiy! Tamom bo'ladi! 🚀
+
+================================================================================
+                        BOSHLANG! OMAD! 🍢
+================================================================================

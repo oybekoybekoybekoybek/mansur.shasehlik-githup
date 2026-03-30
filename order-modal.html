@@ -1,0 +1,28 @@
+
+<!-- Zamonaviy Buyurtma Modali -->
+<div id="orderModal" class="order-modal-overlay">
+    <div class="order-modal-content">
+        <button class="close-order-modal" onclick="closeOrderModal()">×</button>
+        <h2>Buyurtmani rasmiylashtirish</h2>
+        <p>Assalomu alaykum, hurmatli mijoz! Buyurtmangizni yakunlash uchun telefon raqamingizni kiriting.</p>
+        
+        <div class="phone-input-container">
+            <span class="phone-prefix">+998</span>
+            <input type="tel" id="phoneInput" placeholder=" _ _  _ _ _  _ _  _ _" maxlength="12">
+        </div>
+        
+        <h3>To'lov usuli</h3>
+        <div class="payment-options">
+            <div class="payment-option" data-payment="cash" onclick="selectPayment(this)">
+                <i class="fas fa-money-bill-wave"></i>
+                <span>Naqd pul</span>
+            </div>
+            <div class="payment-option" data-payment="card" onclick="selectPayment(this)">
+                <i class="far fa-credit-card"></i>
+                <span>Karta orqali</span>
+            </div>
+        </div>
+        
+        <button id="submitOrderBtn" class="submit-order-btn" disabled>Buyurtma berish</button>
+    </div>
+</div>
